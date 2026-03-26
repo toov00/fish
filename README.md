@@ -69,4 +69,4 @@ Not specified yet.
 ## Resources
 
 - [pipx](https://pypa.github.io/pipx/) for an isolated install
-# fish
+
