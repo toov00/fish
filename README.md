@@ -43,11 +43,19 @@ Timer only:
 fish --time 30
 ```
 
+Desktop notification when done:
+
+```bash
+fish --notify --time 30
+fish --notify npm run build
+```
+
 ## Reference
 
 Flags:
 
 - `--time N` / `-t N`: countdown for N seconds, no command
+- `--notify`: send a desktop notification when done (best-effort)
 
 Arguments:
 

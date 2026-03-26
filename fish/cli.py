@@ -11,7 +11,9 @@ def build_parser() -> argparse.ArgumentParser:
         epilog="""
 examples:
   fish --time 30
+  fish --notify --time 30
   fish npm run build
+  fish --notify npm run build
   fish cargo test
         """,
     )
@@ -21,6 +23,11 @@ examples:
         type=float,
         metavar="SECONDS",
         help="just run a timer for N seconds, no command",
+    )
+    parser.add_argument(
+        "--notify",
+        action="store_true",
+        help="send a desktop notification when done (best-effort)",
     )
     parser.add_argument(
         "command",
@@ -35,7 +42,7 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.time is not None:
-        raise SystemExit(boil_timer(args.time))
+        raise SystemExit(boil_timer(args.time, notify=args.notify))
 
     if not args.command:
         parser.print_help()
@@ -48,6 +55,7 @@ def main() -> None:
     raise SystemExit(
         run_with_kettle(
             cmd,
+            notify=args.notify,
         )
     )
 

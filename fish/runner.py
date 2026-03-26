@@ -4,6 +4,7 @@ import time
 
 from fish.ansi import C_DIM, HIDE_CURSOR, RESET, SHOW_CURSOR
 from fish.render import render
+from fish.notify import notify_done
 from fish.sound import play_done_sound
 
 _FRAME_SLEEP_RUNNING = 0.15
@@ -17,6 +18,7 @@ def run_with_kettle(
     cmd: list[str],
     *,
     sound: bool = True,
+    notify: bool = False,
 ) -> int:
     print(HIDE_CURSOR, flush=True)
 
@@ -57,6 +59,7 @@ def run_with_kettle(
         exit_code = proc_result.get("code", 0)
 
         play_done_sound(enabled=sound)
+        notify_done(enabled=notify, ok=(exit_code == 0), label=" ".join(cmd))
 
         for i in range(_DONE_FRAMES):
             render(1.0, i + 1, done=True, exit_code=exit_code)
@@ -85,6 +88,7 @@ def boil_timer(
     seconds: float,
     *,
     sound: bool = True,
+    notify: bool = False,
 ) -> int:
     print(HIDE_CURSOR, flush=True)
 
@@ -106,6 +110,7 @@ def boil_timer(
             time.sleep(_FRAME_SLEEP_DONE)
 
         play_done_sound(enabled=sound)
+        notify_done(enabled=notify, ok=True, label=f"{seconds:g}s timer")
 
     except KeyboardInterrupt:
         elapsed = time.time() - start
