@@ -1,4 +1,4 @@
-# fish
+# <img src="assets/fish.png" alt="" width="70" /> fish
 
 A simple && tiny CLI that wraps a timer (or a command) and shows a small in-terminal  animation of a fish. 
 
